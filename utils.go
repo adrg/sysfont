@@ -36,6 +36,10 @@ func extractStyles(query string) string {
 	return strings.Join(matched, " ")
 }
 
+func getFamilyScore(query, family string) float64 {
+	return strutil.Similarity(query, cleanQuery(family), metrics.NewJaroWinkler())
+}
+
 func getFontScore(query, queryFamily string, font *Font) float64 {
 	query, queryFamily = strings.ToLower(query), strings.ToLower(queryFamily)
 	name, family := strings.ToLower(font.Name), strings.ToLower(font.Family)

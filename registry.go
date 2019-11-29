@@ -3,9 +3,6 @@ package sysfont
 import (
 	"path/filepath"
 	"strings"
-
-	"github.com/adrg/strutil"
-	"github.com/adrg/strutil/metrics"
 )
 
 type Font struct {
@@ -80,20 +77,18 @@ func (r *registry) matchFamily(query string) (string, bool) {
 	var maxScore float64
 	var maxScoreFamily string
 
-	jw := metrics.NewJaroWinkler()
 	for family, _ := range r.families {
-		score := strutil.Similarity(queryFamily, strings.ToLower(family), jw)
-		if score > maxScore {
+		if score := getFamilyScore(queryFamily, family); score > maxScore {
 			maxScore = score
 			maxScoreFamily = family
 		}
 	}
 
-	if maxScore < 0.9 {
-		return queryFamily, false
+	if maxScore >= 0.9 {
+		return maxScoreFamily, true
 	}
 
-	return maxScoreFamily, true
+	return queryFamily, false
 }
 
 func (r *registry) matchFont(query string, fonts []*Font) *Font {
@@ -106,7 +101,7 @@ func (r *registry) matchFont(query string, fonts []*Font) *Font {
 	var maxScoreFont *Font
 
 	for _, font := range fonts {
-		score := getFontScore(query, queryFamily, font)
+		score := getFamilyScore(queryFamily, font.Family)
 		if score >= 0.85 {
 			score += getFontStyleScore(query, font.Name)
 		}
@@ -116,7 +111,7 @@ func (r *registry) matchFont(query string, fonts []*Font) *Font {
 		}
 	}
 
-	if maxScore >= 0.85 {
+	if maxScore >= 0.9 {
 		return maxScoreFont
 	}
 
