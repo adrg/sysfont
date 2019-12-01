@@ -1,0 +1,4 @@
+github.com/adrg/strutil v0.0.0-20191201094625-c11d54f1dd86 h1:Wz4tC7IdwJW30eyUWHMORfgUhlJt8omKZzR+pMCxp3Y=
+github.com/adrg/strutil v0.0.0-20191201094625-c11d54f1dd86/go.mod h1:pXRr2+IyX5AEPAF5icj/EeTaiflPSD2hvGjnguilZgE=
+github.com/adrg/xdg v0.2.0 h1:VGW6H5ZPKbgYJmMt5x1x7WMdHdboypdL2sSM5jnsGQ4=
+github.com/adrg/xdg v0.2.0/go.mod h1:ZuOshBmzV4Ta+s23hdfFZnBsdzmoR3US0d7ErpqSbTQ=
