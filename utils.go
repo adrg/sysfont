@@ -41,18 +41,19 @@ func getFamilyScore(query, family string) float64 {
 }
 
 func getFontStyleScore(query, font string) float64 {
-	sd := metrics.NewSorensenDice()
-	sd.NgramSize = 4
-
+	// Extract font styles.
 	fontStyles := extractStyles(font)
 	queryStyles := extractStyles(query)
 
-	similarity := strutil.Similarity(queryStyles, fontStyles, sd)
-	for _, sf := range []string{"mono", "sans", "serif"} {
-		if strings.Contains(queryStyles, sf) && strings.Contains(fontStyles, sf) {
-			similarity += 0.1
-		}
+	// Calculate style similarity.
+	sd := metrics.NewSorensenDice()
+	sd.NgramSize = 4
+
+	var similarity float64
+	if queryStyles != "" && fontStyles != "" {
+		similarity = strutil.Similarity(queryStyles, fontStyles, sd)
 	}
+
 	if similarity == 0 {
 		if len(fontStyles) == 0 || strings.Contains(fontStyles, "regular") {
 			similarity += 0.1

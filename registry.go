@@ -50,7 +50,7 @@ func (r *registry) matchFontsByFilename(filename string) []*Font {
 	var fonts []*Font
 	for _, font := range r.fontsByFilename(match.Filename) {
 		if score := (strutil.Similarity(queryFamily, font.Family, jw) +
-			strutil.Similarity(query, font.Name, jw)) / 2; score >= 0.98 {
+			strutil.Similarity(query, font.Name, jw)) / 2; score >= 0.97 {
 			font.Filename = filename
 			fonts = append(fonts, font)
 		}
@@ -92,7 +92,7 @@ func (r *registry) matchFamily(query string) (string, bool) {
 		}
 	}
 
-	if maxScore >= 0.9 {
+	if maxScore >= 0.97 {
 		return maxScoreFamily, true
 	}
 

@@ -5125,7 +5125,7 @@ var fontRegistry = &registry{
 		"Helvetica",
 		"DejaVu Sans",
 		"DejaVu Serif",
-		"DejaVu Mono",
+		"DejaVu Sans Mono",
 		"Liberation Sans",
 		"Liberation Serif",
 		"Liberation Mono",
