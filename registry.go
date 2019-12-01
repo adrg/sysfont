@@ -3,6 +3,9 @@ package sysfont
 import (
 	"path/filepath"
 	"strings"
+
+	"github.com/adrg/strutil"
+	"github.com/adrg/strutil/metrics"
 )
 
 type Font struct {
@@ -29,20 +32,25 @@ func (r *registry) matchFontsByFilename(filename string) []*Font {
 	basename := filepath.Base(filename)
 	query := cleanQuery(strings.TrimSuffix(basename, filepath.Ext(basename)))
 
-	family, ok := r.matchFamily(query)
+	queryFamily, ok := r.matchFamily(query)
 	if !ok {
 		return nil
 	}
 
 	// Attempt to identify font by filename and the extracted family.
-	match := r.matchFont(query, r.families[family])
+	match := r.matchFont(query, r.families[queryFamily])
 	if match == nil {
 		return nil
 	}
 
+	// Identify all suitable fonts in the matched family.
+	jw := metrics.NewJaroWinkler()
+	jw.CaseSensitive = false
+
 	var fonts []*Font
 	for _, font := range r.fontsByFilename(match.Filename) {
-		if score := getFontScore(query, family, font); score >= 0.98 {
+		if score := (strutil.Similarity(queryFamily, font.Family, jw) +
+			strutil.Similarity(query, font.Name, jw)) / 2; score >= 0.98 {
 			font.Filename = filename
 			fonts = append(fonts, font)
 		}
@@ -131,6 +139,11 @@ func (r *registry) getAlternatives(queryFamily string, fonts []*Font) []*Font {
 				break
 			}
 		}
+	}
+
+	// If no alternatives are found, use default families.
+	if len(families) == 0 {
+		families = r.defaults
 	}
 
 	// Match alternative fonts by family.

@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/adrg/strutil"
 	"github.com/adrg/xdg"
 )
 
@@ -16,13 +17,9 @@ type FinderOpts struct {
 	Extensions []string
 }
 
-var DefaultFinderOpts = &FinderOpts{
-	Extensions: []string{".ttf", ".ttc", ".otf"},
-}
-
 func NewFinder(opts *FinderOpts) *Finder {
 	if opts == nil {
-		opts = DefaultFinderOpts
+		opts = &FinderOpts{Extensions: []string{".ttf", ".ttc", ".otf"}}
 	}
 
 	var fonts []*Font
@@ -34,7 +31,7 @@ func NewFinder(opts *FinderOpts) *Finder {
 		// Check file extension.
 		if extensions := opts.Extensions; len(extensions) > 0 {
 			extension := filepath.Ext(strings.ToLower(filename))
-			if !in(extension, extensions...) {
+			if !strutil.SliceContains(extensions, extension) {
 				return nil
 			}
 		}
@@ -73,6 +70,9 @@ func (f *Finder) Match(query string) *Font {
 	if font == nil {
 		font = f.findAlternative(query)
 	}
+	if font == nil {
+		return nil
+	}
 
 	return &(*font)
 }
@@ -83,9 +83,6 @@ func (f *Finder) findAlternative(query string) *Font {
 
 	// Identify alternate fonts based on the matched family.
 	alternatives := fontRegistry.getAlternatives(family, f.fonts)
-	if len(alternatives) == 0 {
-		return f.findDefault(query, family)
-	}
 
 	// Identify best alternative.
 	var maxScore float64
@@ -99,8 +96,4 @@ func (f *Finder) findAlternative(query string) *Font {
 	}
 
 	return maxScoreFont
-}
-
-func (f *Finder) findDefault(query, family string) *Font {
-	return nil
 }
