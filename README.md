@@ -29,7 +29,7 @@ go get github.com/adrg/sysfont
 ```go
 finder := sysfont.NewFinder(nil)
 
-for _, font := range fonts.List() {
+for _, font := range finder.List() {
     fmt.Println(font.Family, font.Name, font.Filename)
 }
 ```
