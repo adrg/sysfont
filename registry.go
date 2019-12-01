@@ -85,7 +85,7 @@ func (r *registry) matchFamily(query string) (string, bool) {
 	var maxScore float64
 	var maxScoreFamily string
 
-	for family, _ := range r.families {
+	for family := range r.families {
 		if score := getFamilyScore(queryFamily, family); score > maxScore {
 			maxScore = score
 			maxScoreFamily = family
