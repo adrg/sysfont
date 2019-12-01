@@ -1,3 +1,8 @@
+/*
+sysfont is a small package that makes it easy to identify installed fonts. It
+is useful for listing installed fonts or for matching fonts based on user
+queries. The matching process also suggests viable font alternatives.
+*/
 package sysfont
 
 import (
