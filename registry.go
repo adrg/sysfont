@@ -8,9 +8,15 @@ import (
 	"github.com/adrg/strutil/metrics"
 )
 
+// Font represents a system font.
 type Font struct {
-	Family   string
-	Name     string
+	// Family contains name of the font family.
+	Family string
+
+	// Name contains the full name of the font.
+	Name string
+
+	// Filename contains the path of the font file.
 	Filename string
 }
 

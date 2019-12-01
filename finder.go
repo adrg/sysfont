@@ -9,14 +9,23 @@ import (
 	"github.com/adrg/xdg"
 )
 
+// Finder is used to identify installed fonts. It can match fonts based on user
+// queries and suggest alternative fonts if the requested fonts are not found.
 type Finder struct {
 	fonts []*Font
 }
 
+// FinderOpts contains options for configuring a font finder.
 type FinderOpts struct {
+	// Extensions controls which types of font files the finder reports.
 	Extensions []string
 }
 
+// NewFinder returns a new font finder. If the opts parameter is nil, default
+// options are used.
+//
+// Default options:
+//   Extensions: []string{".ttf", ".ttc", ".otf"}
 func NewFinder(opts *FinderOpts) *Finder {
 	if opts == nil {
 		opts = &FinderOpts{Extensions: []string{".ttf", ".ttc", ".otf"}}
@@ -24,7 +33,10 @@ func NewFinder(opts *FinderOpts) *Finder {
 
 	var fonts []*Font
 	walker := func(filename string, info os.FileInfo, err error) error {
-		if err != nil || info.IsDir() {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
 			return nil
 		}
 
@@ -39,7 +51,7 @@ func NewFinder(opts *FinderOpts) *Finder {
 		// Attempt to identify fonts by filename.
 		matches := fontRegistry.matchFontsByFilename(filename)
 		if len(matches) == 0 {
-			matches = []*Font{&Font{Filename: filename}}
+			matches = append(matches, &Font{Filename: filename})
 		}
 
 		fonts = append(fonts, matches...)
@@ -48,7 +60,9 @@ func NewFinder(opts *FinderOpts) *Finder {
 
 	// Traverse OS font directories.
 	for _, dir := range xdg.FontDirs {
-		filepath.Walk(dir, walker)
+		if err := filepath.Walk(dir, walker); err != nil {
+			continue
+		}
 	}
 
 	return &Finder{
@@ -56,6 +70,9 @@ func NewFinder(opts *FinderOpts) *Finder {
 	}
 }
 
+// List returns the list of installed fonts. The finder attempts to identify
+// the name and family of the returned fonts. If identification is not possible,
+// only the filename field will be filled.
 func (f *Finder) List() []*Font {
 	fonts := make([]*Font, len(f.fonts))
 	for i, font := range f.fonts {
@@ -65,6 +82,9 @@ func (f *Finder) List() []*Font {
 	return fonts
 }
 
+// Match attempts to identify the best matching installed font based on the
+// specified query. If no close match is found, alternative fonts are searched.
+// If no alternative font is found, a suitable default font is returned.
 func (f *Finder) Match(query string) *Font {
 	font := fontRegistry.matchFont(query, f.fonts)
 	if font == nil {
