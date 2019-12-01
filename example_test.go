@@ -62,6 +62,11 @@ func ExampleFinder_Match() {
 
 	for _, term := range terms {
 		font := finder.Match(term)
+		if font == nil {
+			// Match should always return a font. However, it is safer to check.
+			continue
+		}
+
 		fmt.Printf("%-30s -> %-30s (%s)\n", term, font.Name, font.Filename)
 	}
 }
