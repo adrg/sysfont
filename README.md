@@ -1,7 +1,7 @@
 sysfont
 =======
-[![Build Status](https://travis-ci.org/adrg/sysfont.svg?branch=master)](https://travis-ci.org/adrg/sysfont)
-[![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/adrg/sysfont)
+[![Build Status](https://github.com/adrg/sysfont/workflows/CI/badge.svg)](https://github.com/adrg/sysfont/actions?query=workflow%3ACI)
+[![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/sysfont)](https://pkg.go.dev/github.com/adrg/sysfont)
 [![License: MIT](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![Go Report Card](https://goreportcard.com/badge/github.com/adrg/sysfont)](https://goreportcard.com/report/github.com/adrg/sysfont)
 
