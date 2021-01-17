@@ -74,9 +74,9 @@ func NewFinder(opts *FinderOpts) *Finder {
 // the name and family of the returned fonts. If identification is not possible,
 // only the filename field will be filled.
 func (f *Finder) List() []*Font {
-	fonts := make([]*Font, len(f.fonts))
-	for i, font := range f.fonts {
-		fonts[i] = &(*font)
+	fonts := make([]*Font, 0, len(f.fonts))
+	for _, font := range f.fonts {
+		fonts = append(fonts, font.clone())
 	}
 
 	return fonts
@@ -90,11 +90,8 @@ func (f *Finder) Match(query string) *Font {
 	if font == nil {
 		font = f.findAlternative(query)
 	}
-	if font == nil {
-		return nil
-	}
 
-	return &(*font)
+	return font.clone()
 }
 
 func (f *Finder) findAlternative(query string) *Font {
