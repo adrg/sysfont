@@ -2,8 +2,10 @@ sysfont
 =======
 [![Build Status](https://github.com/adrg/sysfont/workflows/CI/badge.svg)](https://github.com/adrg/sysfont/actions?query=workflow%3ACI)
 [![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/sysfont)](https://pkg.go.dev/github.com/adrg/sysfont)
-[![License: MIT](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Go Report Card](https://goreportcard.com/badge/github.com/adrg/sysfont)](https://goreportcard.com/report/github.com/adrg/sysfont)
+[![MIT license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Go report card](https://goreportcard.com/badge/github.com/adrg/sysfont)](https://goreportcard.com/report/github.com/adrg/sysfont)
+[![GitHub issues](https://img.shields.io/github/issues/adrg/sysfont)](https://github.com/adrg/sysfont/issues)
+[![Buy me a coffee](https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=579fbf&logo=buy%20me%20a%20coffee&logoColor=white)](https://ko-fi.com/T6T72WATK)
 
 sysfont is a small package that makes it easy to identify installed fonts. It
 is useful for listing installed fonts or for matching fonts based on user
@@ -14,7 +16,7 @@ The package uses a collection of standard fonts compiled from the
 processing and similarity metrics for scoring font matches, in order to account
 for partial or inexact input queries.
 
-Full documentation can be found at: https://godoc.org/github.com/adrg/sysfont.
+Full documentation can be found at: https://pkg.go.dev/github.com/adrg/sysfont.
 
 ## Installation
 
@@ -89,11 +91,12 @@ A more comprehensive test made on Ubuntu:
 For more information see:
 - [os-font-list](https://github.com/adrg/os-font-list)
 - [strutil](https://github.com/adrg/strutil)
+- [xdg](https://github.com/adrg/xdg)
 
 ## Contributing
 
 Contributions in the form of pull requests, issues or just general feedback,
-are always welcome.
+are always welcome.  
 See [CONTRIBUTING.MD](https://github.com/adrg/sysfont/blob/master/CONTRIBUTING.md).
 
 ## License
