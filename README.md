@@ -97,10 +97,10 @@ For more information see:
 
 Contributions in the form of pull requests, issues or just general feedback,
 are always welcome.  
-See [CONTRIBUTING.MD](https://github.com/adrg/sysfont/blob/master/CONTRIBUTING.md).
+See [CONTRIBUTING.MD](CONTRIBUTING.md).
 
 ## License
 Copyright (c) 2019 Adrian-George Bostan.
 
 This project is licensed under the [MIT license](https://opensource.org/licenses/MIT).
-See [LICENSE](https://github.com/adrg/sysfont/blob/master/LICENSE) for more details.
+See [LICENSE](LICENSE) for more details.
