@@ -25,6 +25,16 @@ type Font struct {
 	Filename string
 }
 
+// clone returns a duplicate of the current font instance.
+func (f *Font) clone() *Font {
+	if f == nil {
+		return nil
+	}
+
+	font := *f
+	return &font
+}
+
 type registry struct {
 	fonts        []*Font
 	families     map[string][]*Font
