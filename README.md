@@ -2,7 +2,7 @@ sysfont
 =======
 [![Build Status](https://github.com/adrg/sysfont/workflows/CI/badge.svg)](https://github.com/adrg/sysfont/actions?query=workflow%3ACI)
 [![pkg.go.dev documentation](https://pkg.go.dev/badge/github.com/adrg/sysfont)](https://pkg.go.dev/github.com/adrg/sysfont)
-[![MIT license](https://img.shields.io/badge/license-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![MIT license](https://img.shields.io/github/license/adrg/sysfont)](https://opensource.org/licenses/MIT)
 [![Go report card](https://goreportcard.com/badge/github.com/adrg/sysfont)](https://goreportcard.com/report/github.com/adrg/sysfont)
 [![GitHub issues](https://img.shields.io/github/issues/adrg/sysfont)](https://github.com/adrg/sysfont/issues)
 [![Buy me a coffee](https://img.shields.io/static/v1.svg?label=%20&message=Buy%20me%20a%20coffee&color=579fbf&logo=buy%20me%20a%20coffee&logoColor=white)](https://ko-fi.com/T6T72WATK)
