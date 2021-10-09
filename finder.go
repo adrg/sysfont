@@ -1,7 +1,7 @@
 package sysfont
 
 import (
-	"os"
+	"io/fs"
 	"path/filepath"
 	"strings"
 
@@ -32,11 +32,11 @@ func NewFinder(opts *FinderOpts) *Finder {
 	}
 
 	var fonts []*Font
-	walker := func(filename string, info os.FileInfo, err error) error {
+	walker := func(filename string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
-		if info.IsDir() {
+		if d.IsDir() {
 			return nil
 		}
 
@@ -60,7 +60,7 @@ func NewFinder(opts *FinderOpts) *Finder {
 
 	// Traverse OS font directories.
 	for _, dir := range xdg.FontDirs {
-		if err := filepath.Walk(dir, walker); err != nil {
+		if err := filepath.WalkDir(dir, walker); err != nil {
 			continue
 		}
 	}
