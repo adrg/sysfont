@@ -19,6 +19,8 @@ type Finder struct {
 type FinderOpts struct {
 	// Extensions controls which types of font files the finder reports.
 	Extensions []string
+	// SearchPaths is a list of paths to search for fonts.
+	SearchPaths []string
 }
 
 // NewFinder returns a new font finder. If the opts parameter is nil, default
@@ -26,9 +28,14 @@ type FinderOpts struct {
 //
 // Default options:
 //   Extensions: []string{".ttf", ".ttc", ".otf"}
+//   SearchPaths: xdg.FontDirs
 func NewFinder(opts *FinderOpts) *Finder {
 	if opts == nil {
 		opts = &FinderOpts{Extensions: []string{".ttf", ".ttc", ".otf"}}
+	}
+
+	if len(opts.SearchPaths) == 0 {
+		opts.SearchPaths = xdg.FontDirs
 	}
 
 	var fonts []*Font
@@ -59,7 +66,7 @@ func NewFinder(opts *FinderOpts) *Finder {
 	}
 
 	// Traverse OS font directories.
-	for _, dir := range xdg.FontDirs {
+	for _, dir := range opts.SearchPaths {
 		if err := filepath.Walk(dir, walker); err != nil {
 			continue
 		}
