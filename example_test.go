@@ -15,7 +15,7 @@ func ExampleNewFinder() {
 		Extensions: []string{".ttf"},
 	})
 
-	// Create a new finder only searches the current directory for fonts.
+	// Create a new finder that searches for fonts only in the current directory.
 	finder = sysfont.NewFinder(&sysfont.FinderOpts{
 		SearchPaths: []string{"."},
 	})
