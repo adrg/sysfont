@@ -15,6 +15,11 @@ func ExampleNewFinder() {
 		Extensions: []string{".ttf"},
 	})
 
+	// Create a new finder that searches for fonts only in the current directory.
+	finder = sysfont.NewFinder(&sysfont.FinderOpts{
+		SearchPaths: []string{"."},
+	})
+
 	// List detected fonts.
 	for _, font := range finder.List() {
 		fmt.Println(font.Family, font.Name, font.Filename)
