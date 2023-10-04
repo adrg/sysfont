@@ -1,7 +1,6 @@
 package sysfont
 
 import (
-	"os"
 	"path/filepath"
 	"strings"
 
@@ -43,14 +42,7 @@ func NewFinder(opts *FinderOpts) *Finder {
 	}
 
 	var fonts []*Font
-	walker := func(filename string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if info.IsDir() {
-			return nil
-		}
-
+	findFonts(opts, func(filename string) error {
 		// Check file extension.
 		if extensions := opts.Extensions; len(extensions) > 0 {
 			extension := filepath.Ext(strings.ToLower(filename))
@@ -67,14 +59,7 @@ func NewFinder(opts *FinderOpts) *Finder {
 
 		fonts = append(fonts, matches...)
 		return nil
-	}
-
-	// Traverse OS font directories.
-	for _, dir := range opts.SearchPaths {
-		if err := filepath.Walk(dir, walker); err != nil {
-			continue
-		}
-	}
+	})
 
 	return &Finder{
 		fonts: fonts,
