@@ -62,7 +62,9 @@ func NewFinder(opts *FinderOpts) *Finder {
 		// Attempt to identify fonts by filename.
 		matches := fontRegistry.matchFontsByFilename(filename)
 		if len(matches) == 0 {
-			matches = append(matches, &Font{Filename: filename})
+			basename := filepath.Base(filename)
+			family := cleanQuery(strings.TrimSuffix(basename, filepath.Ext(basename)))
+			matches = append(matches, &Font{Family: family, Filename: filename})
 		}
 
 		fonts = append(fonts, matches...)
